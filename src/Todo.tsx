@@ -26,7 +26,7 @@ const Todo = () => {
     dispatch(editTodo(id));
   };
 
-  const handleDeleteTodo = (id: number) => {
+  const handleDeleteTodo = (id: number | null) => {
     dispatch(deleteTodo(id));
   };
 
@@ -43,7 +43,7 @@ const Todo = () => {
         </div>
       ) : (
         <>
-          {todoLists.map((item: any) => {
+          {todoLists.map((item: itemType) => {
             return (
               <React.Fragment>
                 <p>
