@@ -37,7 +37,7 @@ const Todo = () => {
         <input onChange={(e) => setTodo(e.target.value)} value={todo} />
         <button>Add Todo</button>
       </form>
-      {!todoLists ? (
+      {!todoLists.length ? (
         <div>
           <h5>No Todos...</h5>
         </div>
@@ -45,7 +45,7 @@ const Todo = () => {
         <>
           {todoLists.map((item: itemType) => {
             return (
-              <React.Fragment>
+              <div key={item?.id}>
                 <p>
                   {item?.todo}
                   <button
@@ -58,7 +58,7 @@ const Todo = () => {
                     Delete
                   </button>
                 </p>
-              </React.Fragment>
+              </div>
             );
           })}
         </>
