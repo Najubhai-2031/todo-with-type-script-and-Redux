@@ -2,22 +2,17 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addTodo, deleteTodo, editTodo } from "./store/TodoAction";
 
-type item = {
+type itemType = {
   id: number | null;
-  value: string | null;
+  todo: string | null;
 };
 
-type todos = {
-  text: string | null;
-  id: number | null;
-};
-
-type abc = {
-  todoList: Array<item>;
+type todoListType = {
+  todoList: Array<itemType>;
 };
 
 const Todo = () => {
-  const todoLists = useSelector((todo: abc) => todo?.todoList);
+  const todoLists = useSelector((todo: todoListType) => todo?.todoList);
   const dispatch = useDispatch();
   const [todo, setTodo] = useState("");
 
@@ -35,43 +30,41 @@ const Todo = () => {
     dispatch(deleteTodo(id));
   };
 
-  if (!todoLists) {
-    return (
-      <React.Fragment>
-        <form onSubmit={handleAddTodo}>
-          Enter Todo:
-          <input onChange={(e) => setTodo(e.target.value)} value={todo} />
-          <button>Add Todo</button>
-        </form>
+  return (
+    <React.Fragment>
+      <form onSubmit={handleAddTodo}>
+        Enter Todo:
+        <input onChange={(e) => setTodo(e.target.value)} value={todo} />
+        <button>Add Todo</button>
+      </form>
+      {!todoLists ? (
         <div>
           <h5>No Todos...</h5>
         </div>
-      </React.Fragment>
-    );
-  } else {
-    return (
-      <React.Fragment>
-        <form onSubmit={handleAddTodo}>
-          Enter Todo:{" "}
-          <input onChange={(e) => setTodo(e.target.value)} value={todo} />
-          <button>Add Todo</button>
-        </form>
-        {todoLists.map((item: any) => {
-          return (
-            <React.Fragment>
-              <p>
-                {item?.todo}
-                <button onClick={() => handleEditTodo(item?.id)}>Edit</button>
-                <button onClick={() => handleDeleteTodo(item?.id)}>
-                  Delete
-                </button>
-              </p>
-            </React.Fragment>
-          );
-        })}
-      </React.Fragment>
-    );
-  }
+      ) : (
+        <>
+          {todoLists.map((item: any) => {
+            return (
+              <React.Fragment>
+                <p>
+                  {item?.todo}
+                  <button
+                    onClick={() => handleEditTodo(item?.id)}
+                    style={{ marginRight: "3px" }}
+                  >
+                    Edit
+                  </button>
+                  <button onClick={() => handleDeleteTodo(item?.id)}>
+                    Delete
+                  </button>
+                </p>
+              </React.Fragment>
+            );
+          })}
+        </>
+      )}
+    </React.Fragment>
+  );
 };
 
 export default Todo;
