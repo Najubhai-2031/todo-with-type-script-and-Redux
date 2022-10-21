@@ -30,7 +30,7 @@ const TodoReducer: any = (state = initalState, action: any) => {
       });
       return { todoList: [...updatedTodo] };
     default:
-      return;
+      return state;
   }
 };
 
